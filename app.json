@@ -1,0 +1,12 @@
+{
+  "name": "john-dj",
+  "displayName": "john-dj",
+  "expo": {
+    "name": "john-dj",
+    "slug": "john-dj",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
