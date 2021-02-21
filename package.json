@@ -31,5 +31,6 @@
   "jest": {
     "preset": "react-native"
   },
-  "private": true
+  "private": true,
+  "babel": { "plugins": [ [ "@babel/plugin-proposal-decorators", { "legacy": true } ], [ "@babel/plugin-proposal-class-properties", { "loose": true } ] ] }
 }

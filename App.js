@@ -17,6 +17,7 @@ export default function App() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
 
@@ -31,20 +32,29 @@ export default function App() {
           console.log(contact);
         }
       }
+      return () => {
+        isMounted = false;
+      };
     })();
   }, [contact]);
 
-  const Item = ({ title }) => (
-    <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
-    </View>
-  );
+  renderItem = ({ item }) => {
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 50,
+      }}
+    >
+      <Text style={{ color: 'black' }}>Hello@@@@@</Text>
+    </View>;
+  };
 
   return (
-    <View style={{ flex: 1 }}>
-      <SafeAreaView style={{ backgroundColor: 'black' }} />
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-        {isLoading ? (
+        {isLoading && (
           <View
             style={{
               ...StyleSheet.absoluteFill,
@@ -54,9 +64,27 @@ export default function App() {
           >
             <ActivityIndicator size="large" color="black" />
           </View>
-        ) : null}
+        )}
+        <FlatList
+          data={contact}
+          keyExtractor={(item) => item.id}
+          renderItem={(item) => item.id}
+          extraData={contact}
+          ListEmptyComponent={() => (
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 50,
+              }}
+            >
+              <Text style={{ color: 'black' }}>No Contacts</Text>
+            </View>
+          )}
+        />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
