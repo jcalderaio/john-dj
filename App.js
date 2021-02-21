@@ -4,13 +4,13 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
   SafeAreaView,
   FlatList,
   ActivityIndicator,
 } from 'react-native';
 import * as Contacts from 'expo-contacts';
 import Constants from 'expo-constants';
+import { Container, Header, Title, Body, Segment, Button } from 'native-base';
 
 export default function App() {
   const [contact, setContact] = useState([]);
@@ -35,8 +35,20 @@ export default function App() {
   }, [contact]);
 
   return (
-    <View style={styles.container}>
-      <SafeAreaView style={{ backgroundColor: 'black' }} />
+    <Container>
+      <Header>
+        <Body>
+          <Title>Contacts</Title>
+        </Body>
+      </Header>
+      <Segment>
+        <Button first active>
+          <Text>Personal</Text>
+        </Button>
+        <Button last>
+          <Text>Business</Text>
+        </Button>
+      </Segment>
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         {isLoading ? (
           <View
@@ -51,6 +63,7 @@ export default function App() {
         ) : null}
         <FlatList
           data={contact}
+          keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <View style={{ paddingBottom: 10 }}>
               <Text
@@ -70,7 +83,6 @@ export default function App() {
                   fontSize: 18,
                   paddingLeft: 10,
                   paddingBottom: 10,
-                  borderBottom: '1px solid',
                 }}
               >
                 Contact Type: {item.contactType}
@@ -91,7 +103,7 @@ export default function App() {
           )}
         />
       </View>
-    </View>
+    </Container>
   );
 }
 
