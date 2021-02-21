@@ -18,6 +18,8 @@ import {
   Segment,
   Button,
   Content,
+  List,
+  ListItem,
 } from 'native-base';
 
 export default function App() {
@@ -57,61 +59,25 @@ export default function App() {
           <Text>Business</Text>
         </Button>
       </Segment>
+      {isLoading ? (
+        <Content
+          contentContainerStyle={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <ActivityIndicator size="large" color="black" />
+        </Content>
+      ) : null}
       <Content padder>
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
-          {isLoading ? (
-            <View
-              style={{
-                ...StyleSheet.absoluteFill,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <ActivityIndicator size="large" color="black" />
-            </View>
-          ) : null}
-          <FlatList
-            data={contact}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
-              <View style={{ paddingBottom: 10 }}>
-                <Text
-                  style={{
-                    color: 'black',
-                    alignItems: 'center',
-                    fontSize: 18,
-                    paddingLeft: 10,
-                  }}
-                >
-                  Name: {item.name}
-                </Text>
-                <Text
-                  style={{
-                    color: 'black',
-                    alignItems: 'center',
-                    fontSize: 18,
-                    paddingLeft: 10,
-                    paddingBottom: 10,
-                  }}
-                >
-                  Contact Type: {item.contactType}
-                </Text>
-              </View>
-            )}
-            ListEmptyComponent={() => (
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginTop: 50,
-                }}
-              >
-                <Text style={{ color: 'black' }}>No Contacts</Text>
-              </View>
-            )}
-          />
-        </View>
+        <List>
+          {contact.map((contact) => (
+            <ListItem key={contact.id}>
+              <Text>{contact.name}</Text>
+            </ListItem>
+          ))}
+        </List>
       </Content>
     </Container>
   );
@@ -136,3 +102,58 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
 });
+
+// <View style={{ flex: 1, backgroundColor: 'white' }}>
+//           {isLoading ? (
+//             <View
+//               style={{
+//                 ...StyleSheet.absoluteFill,
+//                 alignItems: 'center',
+//                 justifyContent: 'center',
+//               }}
+//             >
+//               <ActivityIndicator size="large" color="black" />
+//             </View>
+//           ) : null}
+//           <List
+//             data={contact}
+//             keyExtractor={(item, index) => index.toString()}
+//             renderItem={({ item }) => (
+//               <View style={{ paddingBottom: 10 }}>
+//                 <Text
+//                   style={{
+//                     color: 'black',
+//                     alignItems: 'center',
+//                     fontSize: 18,
+//                     paddingLeft: 10,
+//                   }}
+//                 >
+//                   Name: {item.name}
+//                 </Text>
+//                 <Text
+//                   style={{
+//                     color: 'black',
+//                     alignItems: 'center',
+//                     fontSize: 18,
+//                     paddingLeft: 10,
+//                     paddingBottom: 10,
+//                   }}
+//                 >
+//                   Contact Type: {item.contactType}
+//                 </Text>
+//               </View>
+//             )}
+//             ListEmptyComponent={() => (
+//               <View
+//                 style={{
+//                   flex: 1,
+//                   alignItems: 'center',
+//                   justifyContent: 'center',
+//                   marginTop: 50,
+//                 }}
+//               >
+//                 <Text style={{ color: 'black' }}>No Contacts</Text>
+//               </View>
+//             )}
+//           />
+//         </View>
