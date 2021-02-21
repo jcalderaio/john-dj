@@ -81,13 +81,12 @@ export default function App() {
           <ActivityIndicator size="large" color="black" />
         </Content>
       ) : null}
-      {showPersonal && (
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
-          <FlatList
-            data={contact}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) =>
-              item.contactType === 'person' && (
+      <FlatList
+        data={contact}
+        keyExtractor={(item, index) => item.id.toString()}
+        renderItem={({ item }) =>
+          showPersonal
+            ? item.contactType == 'person' && (
                 <View style={{ paddingBottom: 10 }}>
                   <Text
                     style={{
@@ -112,29 +111,7 @@ export default function App() {
                   </Text>
                 </View>
               )
-            }
-            ListEmptyComponent={() => (
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginTop: 50,
-                }}
-              >
-                <Text style={{ color: 'black' }}>No Contacts</Text>
-              </View>
-            )}
-          />
-        </View>
-      )}
-      {!showPersonal && (
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
-          <FlatList
-            data={contact}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) =>
-              item.contactType === 'company' && (
+            : item.contactType == 'company' && (
                 <View style={{ paddingBottom: 10 }}>
                   <Text
                     style={{
@@ -159,22 +136,8 @@ export default function App() {
                   </Text>
                 </View>
               )
-            }
-            ListEmptyComponent={() => (
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginTop: 50,
-                }}
-              >
-                <Text style={{ color: 'black' }}>No Contacts</Text>
-              </View>
-            )}
-          />
-        </View>
-      )}
+        }
+      />
     </Container>
   );
 }
