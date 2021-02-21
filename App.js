@@ -17,7 +17,6 @@ export default function App() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    let isMounted = true;
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
 
@@ -32,29 +31,14 @@ export default function App() {
           console.log(contact);
         }
       }
-      return () => {
-        isMounted = false;
-      };
     })();
   }, [contact]);
 
-  renderItem = ({ item }) => {
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 50,
-      }}
-    >
-      <Text style={{ color: 'black' }}>Hello@@@@@</Text>
-    </View>;
-  };
-
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={styles.container}>
+      <SafeAreaView style={{ backgroundColor: 'black' }} />
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-        {isLoading && (
+        {isLoading ? (
           <View
             style={{
               ...StyleSheet.absoluteFill,
@@ -64,12 +48,35 @@ export default function App() {
           >
             <ActivityIndicator size="large" color="black" />
           </View>
-        )}
+        ) : null}
         <FlatList
           data={contact}
-          keyExtractor={(item) => item.id}
-          renderItem={(item) => item.id}
-          extraData={contact}
+          renderItem={({ item }) => (
+            <View style={{ paddingBottom: 10 }}>
+              <Text
+                style={{
+                  color: 'black',
+                  alignItems: 'center',
+                  fontSize: 18,
+                  paddingLeft: 10,
+                }}
+              >
+                Name: {item.name}
+              </Text>
+              <Text
+                style={{
+                  color: 'black',
+                  alignItems: 'center',
+                  fontSize: 18,
+                  paddingLeft: 10,
+                  paddingBottom: 10,
+                  borderBottom: '1px solid',
+                }}
+              >
+                Contact Type: {item.contactType}
+              </Text>
+            </View>
+          )}
           ListEmptyComponent={() => (
             <View
               style={{
@@ -84,7 +91,7 @@ export default function App() {
           )}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
