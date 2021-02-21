@@ -47,27 +47,52 @@ export default function App() {
 
   return (
     <Container>
-      <Header hasSegment>
-        <Body>
-          <Title>Contacts</Title>
+      <Header hasSegment style={{
+        backgroundColor: '#0033cc',
+        margin: 5
+      }}>
+        <Body style={{
+          alignItems: 'center',
+          backgroundColor: '#0033cc',
+        }}>
+          <Title>C O N T A C T S</Title>
         </Body>
       </Header>
       <Segment>
         <Button
           first
           active={showPersonal}
-          style={{ padding: 10 }}
+          style={{ 
+            flex: 1.5, 
+            paddingTop: 25, 
+            paddingBottom: 25, 
+            paddingLeft: 10,
+            justifyContent: 'center',
+            marginLeft: 2,
+            marginBottom: 2,
+            borderColor: 'white',
+            backgroundColor: showPersonal ? "#00ffff" : '#0033cc'        
+          }}
           onPress={() => setPersonal(true)}
         >
-          <Text>Personal</Text>
+          <Text style={{color: showPersonal ? 'black' : 'white'}}>Personal</Text>
         </Button>
         <Button
           last
           active={!showPersonal}
-          style={{ padding: 10 }}
+          style={{ 
+            flex: 1.5, 
+            paddingTop: 25, 
+            paddingBottom: 25, 
+            paddingLeft: 10,
+            justifyContent: 'center',
+            marginLeft: 2,
+            marginBottom: 2,
+            backgroundColor: !showPersonal ? "#00ffff" : '#0033cc'
+          }}
           onPress={() => setPersonal(false)}
         >
-          <Text>Business</Text>
+          <Text style={{color: !showPersonal ? 'black' : 'white'}}>Business</Text>
         </Button>
       </Segment>
       {isLoading ? (
@@ -81,13 +106,12 @@ export default function App() {
           <ActivityIndicator size="large" color="black" />
         </Content>
       ) : null}
-      {showPersonal && (
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
-          <FlatList
-            data={contact}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) =>
-              item.contactType === 'person' && (
+      <FlatList
+        data={contact}
+        keyExtractor={(item, index) => item.id.toString()}
+        renderItem={({ item }) =>
+          showPersonal
+            ? item.contactType == 'person' && (
                 <View style={{ paddingBottom: 10 }}>
                   <Text
                     style={{
@@ -112,29 +136,7 @@ export default function App() {
                   </Text>
                 </View>
               )
-            }
-            ListEmptyComponent={() => (
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginTop: 50,
-                }}
-              >
-                <Text style={{ color: 'black' }}>No Contacts</Text>
-              </View>
-            )}
-          />
-        </View>
-      )}
-      {!showPersonal && (
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
-          <FlatList
-            data={contact}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) =>
-              item.contactType === 'company' && (
+            : item.contactType == 'company' && (
                 <View style={{ paddingBottom: 10 }}>
                   <Text
                     style={{
@@ -159,42 +161,8 @@ export default function App() {
                   </Text>
                 </View>
               )
-            }
-            ListEmptyComponent={() => (
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginTop: 50,
-                }}
-              >
-                <Text style={{ color: 'black' }}>No Contacts</Text>
-              </View>
-            )}
-          />
-        </View>
-      )}
+        }
+      />
     </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: Constants.statusBarHeight,
-    marginHorizontal: 16,
-  },
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-  },
-  header: {
-    fontSize: 32,
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 24,
-  },
-});
