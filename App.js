@@ -10,7 +10,15 @@ import {
 } from 'react-native';
 import * as Contacts from 'expo-contacts';
 import Constants from 'expo-constants';
-import { Container, Header, Title, Body, Segment, Button } from 'native-base';
+import {
+  Container,
+  Header,
+  Title,
+  Body,
+  Segment,
+  Button,
+  Content,
+} from 'native-base';
 
 export default function App() {
   const [contact, setContact] = useState([]);
@@ -36,73 +44,75 @@ export default function App() {
 
   return (
     <Container>
-      <Header>
+      <Header hasSegment>
         <Body>
           <Title>Contacts</Title>
         </Body>
       </Header>
       <Segment>
-        <Button first active>
+        <Button first active style={{ padding: 10 }}>
           <Text>Personal</Text>
         </Button>
-        <Button last>
+        <Button last style={{ padding: 10 }}>
           <Text>Business</Text>
         </Button>
       </Segment>
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
-        {isLoading ? (
-          <View
-            style={{
-              ...StyleSheet.absoluteFill,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <ActivityIndicator size="large" color="black" />
-          </View>
-        ) : null}
-        <FlatList
-          data={contact}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <View style={{ paddingBottom: 10 }}>
-              <Text
-                style={{
-                  color: 'black',
-                  alignItems: 'center',
-                  fontSize: 18,
-                  paddingLeft: 10,
-                }}
-              >
-                Name: {item.name}
-              </Text>
-              <Text
-                style={{
-                  color: 'black',
-                  alignItems: 'center',
-                  fontSize: 18,
-                  paddingLeft: 10,
-                  paddingBottom: 10,
-                }}
-              >
-                Contact Type: {item.contactType}
-              </Text>
-            </View>
-          )}
-          ListEmptyComponent={() => (
+      <Content padder>
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
+          {isLoading ? (
             <View
               style={{
-                flex: 1,
+                ...StyleSheet.absoluteFill,
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginTop: 50,
               }}
             >
-              <Text style={{ color: 'black' }}>No Contacts</Text>
+              <ActivityIndicator size="large" color="black" />
             </View>
-          )}
-        />
-      </View>
+          ) : null}
+          <FlatList
+            data={contact}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <View style={{ paddingBottom: 10 }}>
+                <Text
+                  style={{
+                    color: 'black',
+                    alignItems: 'center',
+                    fontSize: 18,
+                    paddingLeft: 10,
+                  }}
+                >
+                  Name: {item.name}
+                </Text>
+                <Text
+                  style={{
+                    color: 'black',
+                    alignItems: 'center',
+                    fontSize: 18,
+                    paddingLeft: 10,
+                    paddingBottom: 10,
+                  }}
+                >
+                  Contact Type: {item.contactType}
+                </Text>
+              </View>
+            )}
+            ListEmptyComponent={() => (
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: 50,
+                }}
+              >
+                <Text style={{ color: 'black' }}>No Contacts</Text>
+              </View>
+            )}
+          />
+        </View>
+      </Content>
     </Container>
   );
 }
