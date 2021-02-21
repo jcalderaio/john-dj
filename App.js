@@ -21,12 +21,11 @@ import {
   List,
   ListItem,
 } from 'native-base';
-import ContactComponent from './components/ContactComponent';
 
 export default function App() {
   const [contact, setContact] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [showPersonal, showBusiness] = useState(true);
+  const [showPersonal, setPersonal] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -56,22 +55,17 @@ export default function App() {
       <Segment>
         <Button
           first
-          active
+          active={showPersonal}
           style={{ padding: 10 }}
-          onPress={() => {
-            showPersonal(true);
-            showBusiness(false);
-          }}
+          onPress={() => setPersonal(true)}
         >
           <Text>Personal</Text>
         </Button>
         <Button
           last
+          active={!showPersonal}
           style={{ padding: 10 }}
-          onPress={() => {
-            showPersonal(false);
-            showBusiness(true);
-          }}
+          onPress={() => setPersonal(false)}
         >
           <Text>Business</Text>
         </Button>
@@ -88,7 +82,29 @@ export default function App() {
         </Content>
       ) : null}
       <Content padder>
-        <ContactComponent contact={contact} personal={showPersonal} />
+        {showPersonal ? (
+          <List>
+            {contact.map(
+              (contact) =>
+                contact.contactType == 'person' && (
+                  <ListItem key={contact.id}>
+                    <Text>{contact.name}</Text>
+                  </ListItem>
+                )
+            )}
+          </List>
+        ) : (
+          <List>
+            {contact.map(
+              (contact) =>
+                contact.contactType == 'company' && (
+                  <ListItem key={contact.id}>
+                    <Text>{contact.name}</Text>
+                  </ListItem>
+                )
+            )}
+          </List>
+        )}
       </Content>
     </Container>
   );
