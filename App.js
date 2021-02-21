@@ -81,31 +81,100 @@ export default function App() {
           <ActivityIndicator size="large" color="black" />
         </Content>
       ) : null}
-      <Content padder>
-        {showPersonal ? (
-          <List>
-            {contact.map(
-              (contact) =>
-                contact.contactType == 'person' && (
-                  <ListItem key={contact.id}>
-                    <Text>{contact.name}</Text>
-                  </ListItem>
-                )
+      {showPersonal && (
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
+          <FlatList
+            data={contact}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) =>
+              item.contactType === 'person' && (
+                <View style={{ paddingBottom: 10 }}>
+                  <Text
+                    style={{
+                      color: 'black',
+                      alignItems: 'center',
+                      fontSize: 18,
+                      paddingLeft: 10,
+                    }}
+                  >
+                    Name: {item.name}
+                  </Text>
+                  <Text
+                    style={{
+                      color: 'black',
+                      alignItems: 'center',
+                      fontSize: 18,
+                      paddingLeft: 10,
+                      paddingBottom: 10,
+                    }}
+                  >
+                    Contact Type: {item.contactType}
+                  </Text>
+                </View>
+              )
+            }
+            ListEmptyComponent={() => (
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: 50,
+                }}
+              >
+                <Text style={{ color: 'black' }}>No Contacts</Text>
+              </View>
             )}
-          </List>
-        ) : (
-          <List>
-            {contact.map(
-              (contact) =>
-                contact.contactType == 'company' && (
-                  <ListItem key={contact.id}>
-                    <Text>{contact.name}</Text>
-                  </ListItem>
-                )
+          />
+        </View>
+      )}
+      {!showPersonal && (
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
+          <FlatList
+            data={contact}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) =>
+              item.contactType === 'company' && (
+                <View style={{ paddingBottom: 10 }}>
+                  <Text
+                    style={{
+                      color: 'black',
+                      alignItems: 'center',
+                      fontSize: 18,
+                      paddingLeft: 10,
+                    }}
+                  >
+                    Name: {item.name}
+                  </Text>
+                  <Text
+                    style={{
+                      color: 'black',
+                      alignItems: 'center',
+                      fontSize: 18,
+                      paddingLeft: 10,
+                      paddingBottom: 10,
+                    }}
+                  >
+                    Contact Type: {item.contactType}
+                  </Text>
+                </View>
+              )
+            }
+            ListEmptyComponent={() => (
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: 50,
+                }}
+              >
+                <Text style={{ color: 'black' }}>No Contacts</Text>
+              </View>
             )}
-          </List>
-        )}
-      </Content>
+          />
+        </View>
+      )}
     </Container>
   );
 }
@@ -129,58 +198,3 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
 });
-
-// <View style={{ flex: 1, backgroundColor: 'white' }}>
-//           {isLoading ? (
-//             <View
-//               style={{
-//                 ...StyleSheet.absoluteFill,
-//                 alignItems: 'center',
-//                 justifyContent: 'center',
-//               }}
-//             >
-//               <ActivityIndicator size="large" color="black" />
-//             </View>
-//           ) : null}
-//           <List
-//             data={contact}
-//             keyExtractor={(item, index) => index.toString()}
-//             renderItem={({ item }) => (
-//               <View style={{ paddingBottom: 10 }}>
-//                 <Text
-//                   style={{
-//                     color: 'black',
-//                     alignItems: 'center',
-//                     fontSize: 18,
-//                     paddingLeft: 10,
-//                   }}
-//                 >
-//                   Name: {item.name}
-//                 </Text>
-//                 <Text
-//                   style={{
-//                     color: 'black',
-//                     alignItems: 'center',
-//                     fontSize: 18,
-//                     paddingLeft: 10,
-//                     paddingBottom: 10,
-//                   }}
-//                 >
-//                   Contact Type: {item.contactType}
-//                 </Text>
-//               </View>
-//             )}
-//             ListEmptyComponent={() => (
-//               <View
-//                 style={{
-//                   flex: 1,
-//                   alignItems: 'center',
-//                   justifyContent: 'center',
-//                   marginTop: 50,
-//                 }}
-//               >
-//                 <Text style={{ color: 'black' }}>No Contacts</Text>
-//               </View>
-//             )}
-//           />
-//         </View>
