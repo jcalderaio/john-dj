@@ -21,10 +21,12 @@ import {
   List,
   ListItem,
 } from 'native-base';
+import ContactComponent from './components/ContactComponent';
 
 export default function App() {
   const [contact, setContact] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [showPersonal, showBusiness] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -52,10 +54,25 @@ export default function App() {
         </Body>
       </Header>
       <Segment>
-        <Button first active style={{ padding: 10 }}>
+        <Button
+          first
+          active
+          style={{ padding: 10 }}
+          onPress={() => {
+            showPersonal(true);
+            showBusiness(false);
+          }}
+        >
           <Text>Personal</Text>
         </Button>
-        <Button last style={{ padding: 10 }}>
+        <Button
+          last
+          style={{ padding: 10 }}
+          onPress={() => {
+            showPersonal(false);
+            showBusiness(true);
+          }}
+        >
           <Text>Business</Text>
         </Button>
       </Segment>
@@ -71,13 +88,7 @@ export default function App() {
         </Content>
       ) : null}
       <Content padder>
-        <List>
-          {contact.map((contact) => (
-            <ListItem key={contact.id}>
-              <Text>{contact.name}</Text>
-            </ListItem>
-          ))}
-        </List>
+        <ContactComponent contact={contact} personal={showPersonal} />
       </Content>
     </Container>
   );
